@@ -1,0 +1,39 @@
+{
+   "name": "cdnjs-mirror-index",
+   "private": true,
+   "version": "1.0.0",
+   "author": {
+      "name": "crrashh1542",
+      "email": "1542@crrashh.com",
+      "url": "https://www.crrashh.com"
+   },
+   "repository": {
+      "type": "git",
+      "url": "https://github.com/crrashh1542/cdnjs-mirror"
+   },
+   "bugs": {
+      "url": "https://github.com/crrashh1542/cdnjs-mirror/issues"
+   },
+   "type": "module",
+   "license": "Apache-2.0",
+   "scripts": {
+      "dev": "vite",
+      "build": "tsc && vite build",
+      "deploy": "node deploy.cjs",
+      "preview": "vite preview"
+   },
+   "dependencies": {
+      "highlight.js": "^11.11.1",
+      "less": "^4.4.1",
+      "normalize.css": "^8.0.1",
+      "react": "^19.1.1",
+      "react-dom": "^19.1.1"
+   },
+   "devDependencies": {
+      "@types/react": "^19.1.11",
+      "@types/react-dom": "^19.1.7",
+      "@vitejs/plugin-react": "^5.0.1",
+      "typescript": "^5.9.2",
+      "vite": "^7.1.3"
+   }
+}

@@ -1,0 +1,10 @@
+# CDN 缓存内容
+cdn/
+
+# 前端
+node_modules/
+
+# 静态构建产物
+static/_assets/
+static/favicon.ico
+static/index.html
