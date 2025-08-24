@@ -8,8 +8,14 @@ export default defineConfig({
    ],
    resolve: {},
    server: {
-      port: 23646,
-      host: true
+      port: 23656,
+      host: true,
+      proxy: {
+         "/getSite": {
+            target: "http://localhost:23657",
+            changeOrigin: true
+         }
+      }
    },
    build: {
       rollupOptions: {
