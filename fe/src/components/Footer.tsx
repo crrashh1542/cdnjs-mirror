@@ -1,6 +1,5 @@
 import '../styles/footer.less'
 import externalIcon from '../assets/images/external.svg'
-// import miitIcon from '../assets/images/miit.png'
 
 export default () => 
    <footer>

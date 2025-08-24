@@ -5,6 +5,7 @@ cdn/
 node_modules/
 
 # 静态构建产物
+dist/
 static/_assets/
 static/favicon.ico
 static/index.html
