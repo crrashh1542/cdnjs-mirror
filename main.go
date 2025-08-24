@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"io"
 	"log"
@@ -14,17 +15,21 @@ import (
 )
 
 const (
-	// 原始CDNJS URL
 	originalCDNJS = "https://cdnjs.cloudflare.com"
-	// 本地CDN目录
-	localCDNDir = "./cdn"
-	// 静态文件目录
+	localCacheDir = "./cdn"
 	staticDir = "./static"
-	// 资源目录
 	assetsDir = "./static/_assets"
 )
 
+var (
+	siteURL string
+)
+
 func main() {
+	flag.StringVar(&siteURL, "h", "http://localhost:23467", "站点URL，例如: https://cdn.example.com")
+	flag.Parse()
+	siteURL = strings.TrimRight(siteURL, "/")
+
 	// 设置Gin为发布模式
 	gin.SetMode(gin.ReleaseMode)
 	
@@ -78,6 +83,14 @@ func main() {
 		})
 	})
 
+	// getSite 用于返回站点域名及端口号的信息
+	r.GET("/getSite", func(c *gin.Context) {
+		c.JSON(200, gin.H{
+			"code": 200,
+			"site": siteURL,
+		})
+	})
+
 	// CDNJS镜像路由 - 处理所有非特殊路径的请求
 	r.NoRoute(func(c *gin.Context) {
 		path := c.Request.URL.Path
@@ -96,12 +109,12 @@ func main() {
 	fmt.Printf("[%s] 正在启动CDN路由服务\n", time.Now().Format("06-01-02 15:04:05"))
 
 	// 启动服务器
-	port := getPort()
+	port := "23657"
 	addr := ":" + port
-	
-	fmt.Printf("监听地址: http://localhost%s\n", addr)
-	fmt.Printf("健康检查: http://localhost%s/health\n", addr)
-	fmt.Println("========================================")
+	fmt.Println("监听地址: http://localhost:23657")
+	fmt.Printf("自定义访问地址: %s\n", siteURL)
+	fmt.Printf("健康检查: %s/health\n", siteURL)
+	fmt.Printf("获取站点信息: %s/getSite\n", siteURL)
 
 	// 启动服务器并处理错误
 	if err := r.Run(addr); err != nil {
@@ -111,7 +124,7 @@ func main() {
 
 // createDirectories 创建必要的目录
 func createDirectories() {
-	dirs := []string{staticDir, assetsDir, localCDNDir}
+	dirs := []string{staticDir, assetsDir, localCacheDir}
 	for _, dir := range dirs {
 		if !dirExists(dir) {
 			if err := os.MkdirAll(dir, 0755); err != nil {
@@ -134,14 +147,6 @@ func dirExists(dirname string) bool {
 	return info.IsDir()
 }
 
-// getPort 获取端口
-func getPort() string {
-	if port := os.Getenv("PORT"); port != "" {
-		return port
-	}
-	return "23647"
-}
-
 // handleCDNJSRequest 处理CDNJS请求
 func handleCDNJSRequest(c *gin.Context) {
 	// 获取请求的文件路径（去掉开头的/）
@@ -153,7 +158,7 @@ func handleCDNJSRequest(c *gin.Context) {
 	}
 
 	// 构造本地文件路径
-	localFilePath := filepath.Join(localCDNDir, filePath)
+	localFilePath := filepath.Join(localCacheDir, filePath)
 
 	// 检查本地是否已有缓存
 	if fileExists(localFilePath) {

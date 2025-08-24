@@ -19,7 +19,11 @@ pnpm install
 pnpm run deploy
 ``` 
 
-4. 回到上级目录，启动服务程序即可。程序默认运行在 23646 端口。
+4. 回到上级目录，启动服务程序即可。程序默认运行在 23657 端口。
 ```shell
 go run main.go
+```
+也可以通过 `-s` 参数来指定运行的域名和端口号。举个栗子：
+```shell
+go run main.go -s "https://cdn.example.com"
 ```
