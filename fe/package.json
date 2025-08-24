@@ -23,11 +23,11 @@
       "preview": "vite preview"
    },
    "dependencies": {
-      "highlight.js": "^11.11.1",
       "less": "^4.4.1",
       "normalize.css": "^8.0.1",
       "react": "^19.1.1",
-      "react-dom": "^19.1.1"
+      "react-dom": "^19.1.1",
+      "react-syntax-highlighter": "^15.6.3"
    },
    "devDependencies": {
       "@types/react": "^19.1.11",
