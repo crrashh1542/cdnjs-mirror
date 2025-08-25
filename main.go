@@ -72,7 +72,7 @@ func main() {
 	}
 
 	// getSite 用于返回站点域名及端口号的信息
-	r.GET("/getSite", func(c *gin.Context) {
+	r.GET("/getStatus", func(c *gin.Context) {
 		c.JSON(200, gin.H{
 			"code": 200,
 			"site": siteURL,
@@ -84,7 +84,7 @@ func main() {
 		path := c.Request.URL.Path
 		
 		// 排除特殊路径
-		if path == "/" || path == "/index.html" || path == "/health" || 
+		if path == "/" || path == "/index.html" || 
 		   strings.HasPrefix(path, "/_assets") {
 			// 这些路径应该已经被其他路由处理了
 			c.Status(http.StatusNotFound)
@@ -101,7 +101,6 @@ func main() {
 	addr := ":" + port
 	fmt.Println("监听地址: http://localhost:23657")
 	fmt.Printf("自定义访问地址: %s\n", siteURL)
-	fmt.Printf("健康检查: %s/health\n", siteURL)
 	fmt.Printf("获取站点信息: %s/getSite\n", siteURL)
 
 	if err := r.Run(addr); err != nil {

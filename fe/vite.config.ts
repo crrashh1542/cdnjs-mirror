@@ -11,7 +11,7 @@ export default defineConfig({
       port: 23656,
       host: true,
       proxy: {
-         "/getSite": {
+         "/getStatus": {
             target: "http://localhost:23657",
             changeOrigin: true
          }
