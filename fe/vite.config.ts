@@ -23,7 +23,16 @@ export default defineConfig({
             hashCharacters: 'hex',
             assetFileNames: '_assets/[name]-[hash].[ext]',
             chunkFileNames: '_assets/[name]-[hash].js',
-            entryFileNames: '_assets/[name]-[hash].js'
+            entryFileNames: '_assets/[name]-[hash].js',
+            manualChunks(i: String) {
+               if (i.includes('react-dom')) {
+                  return 'vendor_react-dom'
+               } else if(i.includes('react-syntax-highlighter')) {
+                  return 'vendor_highlight'
+               } else if(i.includes('react')) {
+                  return 'vendor_react'
+               }
+            }
          }
       }
    },
