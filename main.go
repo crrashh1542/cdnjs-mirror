@@ -16,6 +16,7 @@ import (
 
 var (
 	siteURL string
+	buildId = "dev"
 )
 
 func main() {
@@ -25,6 +26,7 @@ func main() {
 	handlers.SetSiteURL(siteURL)
 
 	gin.SetMode(gin.ReleaseMode)
+	handlers.SetBuildId(buildId)
 	utils.CreateDirs([]string{
 		config.StaticDir, 
 		config.AssetsDir, 

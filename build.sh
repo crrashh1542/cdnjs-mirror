@@ -1,13 +1,17 @@
 #!/bin/bash
 set -e
 
+echo "[$(date "+%y-%m-%d %H:%M:%S")] CDNJS Mirror 构建开始"
+
 VERSION="1.1.0"
+BUILD_HASH=$(git rev-parse --short HEAD)
 PLATFORMS=("linux" "darwin" "windows")
 ARCHITECTURES=("amd64" "arm64")
-LDFLAGS="-w -s"
+LDFLAGS="-w -s -X main.buildId=$BUILD_HASH"
 BUILD_COUNT=1
 
-echo "[$(date "+%y-%m-%d %H:%M:%S")] CDNJS Mirror v${VERSION} 构建开始"
+echo "[$(date "+%y-%m-%d %H:%M:%S")] 当前版本：v${VERSION}"
+echo "[$(date "+%y-%m-%d %H:%M:%S")] 当前提交：${BUILD_HASH}"
 
 # 构建前端
 cd fe

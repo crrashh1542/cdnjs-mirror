@@ -2,21 +2,24 @@ import { useState, useEffect } from 'react'
 import { Light as SyntaxHighlighter } from 'react-syntax-highlighter'
 import xml from 'react-syntax-highlighter/dist/esm/languages/hljs/xml'
 import { atomOneLight } from 'react-syntax-highlighter/dist/esm/styles/hljs'
+// Light 引入的高亮语法需要手动注册
+SyntaxHighlighter.registerLanguage('xml', xml)
 
 import Catalog from './widgets/Catalog'
 
-import sitePromise from '../utils/getSite'
+import statusPromise from '../utils/getStatus'
 import '../styles/content.less'
 
-// Light 引入的高亮语法需要手动注册
-SyntaxHighlighter.registerLanguage('xml', xml)
+interface ResultType {
+    site: string
+}
 
 export default () => {
     // 将 site 的 Promise 对象解析并保存到 site 变量里
     const [site, setSite] = useState<string>('')
     useEffect(() => {
-        sitePromise.then(result => {
-            setSite(result)
+        statusPromise.then((result: ResultType) => {
+            setSite(result.site)
         }).catch(error => {
             console.error('Error resolving Promise object! ', error)
         })
