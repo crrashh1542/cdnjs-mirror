@@ -1,6 +1,7 @@
 package main
 
 import (
+	"embed"
 	"flag"
 	"fmt"
 	"log"
@@ -13,6 +14,9 @@ import (
 	"cdnjs-mirror/router"
 	"cdnjs-mirror/utils"
 )
+
+//go:embed static/*
+var staticFiles embed.FS
 
 var (
 	siteURL string
@@ -27,11 +31,7 @@ func main() {
 
 	gin.SetMode(gin.ReleaseMode)
 	handlers.SetBuildId(buildId)
-	utils.CreateDirs([]string{
-		config.StaticDir, 
-		config.AssetsDir, 
-		config.LocalCacheDir,
-	})
+	utils.CreateDirs([]string{config.LocalCacheDir,})
 	fmt.Printf("[%s] 准备启动HTTP服务......\n", time.Now().Format("06-01-02 15:04:05"))
 
 	r := gin.New()
@@ -39,7 +39,7 @@ func main() {
 	r.Use(gin.Recovery())
 
 	// CDNJS 镜像路由
-	r = router.SetupRouter()
+	r = router.SetupRouter(staticFiles)
 	fmt.Printf("[%s] 正在启动CDN路由服务\n", time.Now().Format("06-01-02 15:04:05"))
 
 	// 启动 Server
