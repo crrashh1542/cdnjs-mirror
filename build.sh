@@ -7,14 +7,22 @@ VERSION="1.1.1"
 BUILD_HASH=$(git rev-parse --short HEAD)
 PLATFORMS=("linux" "darwin" "windows")
 ARCHITECTURES=("amd64" "arm64")
-LDFLAGS="-w -s -X main.buildId=$BUILD_HASH"
 BUILD_COUNT=1
 
 echo "[$(date "+%y-%m-%d %H:%M:%S")] 当前版本：v${VERSION}"
-echo "[$(date "+%y-%m-%d %H:%M:%S")] 当前提交：${BUILD_HASH}"
+
+# 判断是否有未提交的更改，如果有就在 hash 后加上 -dirty
+if git diff-index --quiet HEAD -- && git diff-files --quiet; then
+    echo "[$(date "+%y-%m-%d %H:%M:%S")] 当前提交：${BUILD_HASH}"
+else
+    echo "[$(date "+%y-%m-%d %H:%M:%S")] 当前提交：${BUILD_HASH}，存在未提交的更改"
+    BUILD_HASH="${BUILD_HASH}-dirty"
+fi
+LDFLAGS="-w -s -X main.buildId=$BUILD_HASH"
 
 # 构建前端
 cd fe
+pnpm install
 pnpm run deploy
 cd ..
 BUILD_COUNT=$((BUILD_COUNT + 1))
