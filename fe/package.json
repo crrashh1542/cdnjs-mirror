@@ -1,7 +1,7 @@
 {
-   "name": "cdnjs-mirror-index",
+   "name": "cdnjs-mirror-fe",
    "private": true,
-   "version": "1.1.0",
+   "version": "1.1.1",
    "author": {
       "name": "crrashh1542",
       "email": "1542@crrashh.com",
