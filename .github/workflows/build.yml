@@ -1,0 +1,39 @@
+name: CI Build
+on: 
+    push:
+        paths-ignore:
+            - '**.md'
+            - '.github/**'
+            - '!.github/workflows/**'
+jobs: 
+    build:
+        name: Build
+        runs-on: ubuntu-latest
+        steps:
+
+          - name: 🧐 Checkout
+            id: checkout
+            uses: actions/checkout@v4
+
+          - name: 🛠️ Setup frontend environment
+            id: setup-fe
+            uses: pnpm/action-setup@v4
+            with:
+                version: latest
+        
+          - name: 🔧 Setup backend environment
+            id: setup-be
+            uses: actions/setup-go@v5
+            with:
+                go-version-file: 'go.mod'
+
+          - name: 🚀 Build production app
+            id: build
+            run: bash build.sh
+
+          - name: 🌐 Upload artifacts
+            id: upload
+            uses: actions/upload-artifact@v4
+            with:
+                name: dist-prod-ci
+                path: dist
