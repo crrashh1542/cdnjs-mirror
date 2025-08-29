@@ -24,7 +24,7 @@ export default defineConfig({
             assetFileNames: '_assets/[name]-[hash].[ext]',
             chunkFileNames: '_assets/[name]-[hash].js',
             entryFileNames: '_assets/[name]-[hash].js',
-            manualChunks(i: String) {
+            manualChunks(i: string) {
                if (i.includes('react-dom')) {
                   return 'vendor_react-dom'
                } else if(i.includes('react-syntax-highlighter')) {
