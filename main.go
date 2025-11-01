@@ -24,7 +24,7 @@ var (
 )
 
 func main() {
-	flag.StringVar(&siteURL, "h", "http://localhost:23467", "站点URL，例如: https://cdn.example.com")
+	flag.StringVar(&siteURL, "h", "http://localhost:23657", "站点URL，例如: https://cdn.example.com")
 	flag.Parse()
 	siteURL = strings.TrimRight(siteURL, "/")
 	handlers.SetSiteURL(siteURL)
