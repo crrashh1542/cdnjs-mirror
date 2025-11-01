@@ -3,7 +3,7 @@ set -e
 
 echo "[$(date "+%y-%m-%d %H:%M:%S")] CDNJS Mirror 构建开始"
 
-VERSION="1.1.1"
+VERSION="1.1.2"
 BUILD_HASH=$(git rev-parse --short HEAD)
 PLATFORMS=("linux" "darwin" "windows")
 ARCHITECTURES=("amd64" "arm64")
